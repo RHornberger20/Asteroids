@@ -1,3 +1,5 @@
+import pygame
+
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
@@ -19,3 +21,7 @@ SHOT_RADIUS = 5
 PLAYER_SHOOT_SPEED = 500
 
 PLAYER_SHOOT_COOLDOWN_SECONDS = 0.3
+
+#pygame.mixer.pre_init(44100, -16, 1, 4096)
+pygame.mixer.init()
+SHOOT_SOUND = pygame.mixer.Sound('laser.mp3')

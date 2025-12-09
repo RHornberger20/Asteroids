@@ -1,4 +1,4 @@
-from constants import PLAYER_RADIUS, LINE_WIDTH, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN_SECONDS
+from constants import PLAYER_RADIUS, LINE_WIDTH, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN_SECONDS, SHOOT_SOUND
 from circleshape import *
 from shot import *
 
@@ -27,13 +27,13 @@ class Player(CircleShape):
 		self.shoot_timer -= dt
 		keys = pygame.key.get_pressed()
 
-		if keys[pygame.K_a]:
+		if keys[pygame.K_a] or keys[pygame.K_LEFT]:
 			self.rotate(-dt)
-		if keys[pygame.K_d]:
+		if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
 			self.rotate(dt)
-		if keys[pygame.K_w]:
+		if keys[pygame.K_w] or keys[pygame.K_UP]:
 			self.move(dt)
-		if keys[pygame.K_s]:
+		if keys[pygame.K_s] or keys[pygame.K_DOWN]:
 			self.move(-dt)
 		if keys[pygame.K_SPACE]:
 			self.shoot()
@@ -53,3 +53,13 @@ class Player(CircleShape):
 		shot = Shot(self.position.x,self.position.y)
 
 		shot.velocity = unit_vector.rotate(self.rotation) * PLAYER_SHOOT_SPEED
+		SHOOT_SOUND.play()
+
+	def color_change_green(self,screen):
+		pygame.draw.polygon(screen,("green"),self.triangle(),LINE_WIDTH)
+
+	def color_change_purple(self,screen):
+		pygame.draw.polygon(screen,("purple"),self.triangle(),LINE_WIDTH)
+
+	def color_change_red(self,screen):
+		pygame.draw.polygon(screen,("red"),self.triangle(),LINE_WIDTH)
